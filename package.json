@@ -1,0 +1,16 @@
+{
+  "name": "chatrooms",
+  "version": "0.0.1",
+  "description": "\"Minimal chatrooms server\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "\"Bartosz Lenartowicz\"",
+  "repository": "git@github.com:Bartosz95/chatrooms.git",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "2.3.0",
+    "mime": "2.4.4"
+  }
+}
