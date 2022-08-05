@@ -4,8 +4,15 @@
 
     </head>
     <body>
-        Chat App
-        <button id="increment">+1</button>
+        chat room
+        <div id="messages"></div>
+        <form id="message-form">
+            <textarea id="message" placeholder="Message"></textarea>
+            <button>Send</button>
+        </form>
+       
+        
+
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/chat.js"></script>
     </body>
