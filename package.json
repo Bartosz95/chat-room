@@ -11,6 +11,7 @@
   "repository": "git@github.com:Bartosz95/chatrooms.git",
   "license": "ISC",
   "dependencies": {
+    "bad-words": "^3.0.4",
     "express": "^4.18.1",
     "socket.io": "4.5.1"
   },
