@@ -17,7 +17,6 @@ app.use(express.static(publicDir))
 
 
 io.on('connection', socket => {
-    console.log('New WebSocket connection')
 
     socket.on('join', (options, callback) => {
         

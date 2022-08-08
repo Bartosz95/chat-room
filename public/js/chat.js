@@ -56,7 +56,6 @@ socket.on('locationMessage', message => {
 })
 
 socket.on('roomData', ({ room, users }) => {
-    console.log('roomData')
     const html = Mustache.render(sidebarTemplate, {
         room,
         users
@@ -78,7 +77,6 @@ $messageForm.addEventListener('submit', e => {
         if(error) {
             return console.log(error)
         }
-        console.log('The message delivered!')
     })
 })
 
@@ -97,7 +95,6 @@ $sendLocationButton.addEventListener('click', () => {
         }, 
         () => {
             $sendLocationButton.removeAttribute('disabled')
-            console.log("Location shared!")
         })
     })
 })
