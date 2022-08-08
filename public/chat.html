@@ -6,8 +6,8 @@
         <link rel="stylesheets" href="/css/style.css">
     </head>
     <body>
-        <div>
-            <h1>CHAT ROOM</h1>
+        <div id="sidebar">
+            
         </div>
 
         <div>
@@ -16,7 +16,7 @@
 
                 <div>
                     <form id="message-form">
-                        <textarea id="message" placeholder="Message"></textarea>
+                        <textarea id="message" placeholder="Message" required autocomplete="off"></textarea>
                         <button>Send</button>
                     </form>
                     <button id="send-location">Send location</button>
@@ -42,6 +42,16 @@
                 </p>
                 <p><a href="{{url}}" target="_blank" >My current location</a></p>
             </div>
+        </script>
+
+        <script id="sidebar-template" type="text/html">
+            <h2>{{room}}</h2>
+            <h3>Users</h3>
+            <ul>
+                {{#users}}
+                  <li>{{username}}</li>
+                {{/users}}
+            </ul>
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
