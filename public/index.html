@@ -1,22 +1,36 @@
 <!DOCKTYPE html>
 <html>
     <head>
-
+        <title>Chat room</title>
+        <link rel="icon" href="/img/favicon.png">
+        <link rel="stylesheets" href="/css/style.css">
     </head>
     <body>
-        <h1>CHAT ROOM</h1>
-        
-        <div id="messages"></div>
-        
-        <form id="message-form">
-            <textarea id="message" placeholder="Message"></textarea>
-            <button>Send</button>
-        </form>
-        <button id="send-location">Send location</button>
-        
+        <div>
+            <h1>CHAT ROOM</h1>
+        </div>
+
+        <div>
+            <div>
+                <div id="messages"></div>
+
+                <div>
+                    <form id="message-form">
+                        <textarea id="message" placeholder="Message"></textarea>
+                        <button>Send</button>
+                    </form>
+                    <button id="send-location">Send location</button>
+                </div>
+            </div>
+        </div>
+
         <script id="message-template" type="text/html">
             <div>
-                <p>{{createdAt}} - {{message}}</p>    
+                <p>
+                    <span>User name</span>
+                    <span>{{createdAt}}</span>
+                </p>
+                <p><span>{{message}}</span></p>
             </div>
         </script>
 
