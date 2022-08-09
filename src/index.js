@@ -11,8 +11,11 @@ server = http.createServer(app)
 io = socketio(server)
 
 const port = process.env.PORT || 3000
-const publicDir = path.join(__dirname, '../public')
 
+const bootstrapDistDir = path.join(__dirname + '/../node_modules/bootstrap/dist')
+const publicDir = path.join(__dirname, '/../public')
+
+app.use(express.static(bootstrapDistDir));
 app.use(express.static(publicDir))
 
 
