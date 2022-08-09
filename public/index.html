@@ -3,19 +3,25 @@
     <head>
         <title>Chat room</title>
         <link rel="icon" href="/img/favicon.png">
-        <link rel="stylesheets" href="/css/style.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
     </head>
     <body>
-        <div>
+        
+        <div class="mb-3 container card login-form" style="margin-top: 10%; width: 30%;">
             <div>
-                <h1>Join</h1>
+                <h1>Join to room</h1>
             </div>
             <form action="/chat.html">
-                <label>Display name</label>
-                <input type="text" name="username" placeholder="Display name" required>
-                <label>Room name</label>
-                <input type="text" name="room" placeholder="Room" required>
-                <button>Join</button>
+                <div class="mb-3">
+                    <label class="form-label">Chose your display name</label>
+                    <input class="form-control" type="text" name="username" placeholder="Name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Chose to which room you want to join</label>
+                    <input class="form-control" type="text" name="room" placeholder="Room" required>
+                </div>
+                <button class="btn btn-primary" >Join</button>
             </form>
         </div>
     </body>

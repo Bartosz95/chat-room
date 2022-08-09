@@ -3,57 +3,68 @@
     <head>
         <title>Chat room</title>
         <link rel="icon" href="/img/favicon.png">
-        <link rel="stylesheets" href="/css/style.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
-        <div id="sidebar">
+        <div class="parent-div">
             
-        </div>
+            <div id="sidebar" class="alert alert-success" role="alert"></div>
+            
+            <div class="main-content">
 
-        <div>
-            <div>
-                <div>
-                    <div id="messages"></div>    
-                </div>
+                <div id="messages"></div>
                 
-                <div>
+                <div class="message-form">
                     <form id="message-form">
-                        <textarea id="message" placeholder="Message" required autocomplete="off"></textarea>
-                        <button>Send</button>
+                        <div>
+                            <textarea id="message" placeholder="Message" required autocomplete="off"></textarea>
+                        </div>
+                        <button class="btn btn-primary send-button">Send</button>
                     </form>
-                    <button id="send-location">Send location</button>
+                    
+                    <button id="send-location" class="btn btn-primary">Send location</button>
                 </div>
             </div>
+
+            <div class="clear"></div>
         </div>
 
         <script id="message-template" type="text/html">
-            <div>
+            <div class="alert alert-secondary" role="alert">
                 <p>
-                    <span>{{username}}</span>
-                    <span>{{createdAt}}</span>
+                    <span class="fw-bold">{{username}}</span>
+                    <span class="fw-lighter">{{createdAt}}</span>
                 </p>
-                <p><span>{{message}}</span></p>
+                <p><span class="text-break">{{message}}</span></p>
             </div>
         </script>
 
         <script id="location-template" type="text/html">
-            <div>
+            <div class="alert alert-secondary" role="alert">
                 <p>
-                    <span>User name</span>
-                    <span>{{createdAt}}</span>
+                    <span class="fw-bold">{{username}}</span>
+                    <span class="fw-lighter">{{createdAt}}</span>
                 </p>
                 <p><a href="{{url}}" target="_blank" >My current location</a></p>
+                
             </div>
         </script>
 
-        <script id="sidebar-template" type="text/html">
-            <h2>{{room}}</h2>
-            <h3>Users</h3>
-            <ul>
-                {{#users}}
-                  <li>{{username}}</li>
-                {{/users}}
-            </ul>
+        <script id="sidebar-template" type="text/html" >
+            <p>
+                <h4><span class="badge text-bg-light room">{{room}}</span></h4>
+            </p>
+            
+
+            <p>
+                <ul class="list-group list-group-flush">
+                    {{#users}}
+                      <li class="list-group-item list-group-item-success fw-bold">{{username}}</li>
+                    {{/users}}
+                </ul>
+            </p>
+            
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
