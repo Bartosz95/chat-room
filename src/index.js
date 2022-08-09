@@ -13,9 +13,16 @@ io = socketio(server)
 const port = process.env.PORT || 80
 
 const bootstrapDistDir = path.join(__dirname + '/../node_modules/bootstrap/dist')
+const mustacheDir = path.join(__dirname, '/../node_modules/mustache/mustache.min.js')
+const momentDir = path.join(__dirname, '/../node_modules/moment/min/moment.min.js')
+const qsDir = path.join(__dirname, '/../node_modules/qs/dist/qs.js')
+
 const publicDir = path.join(__dirname, '/../public')
 
 app.use(express.static(bootstrapDistDir));
+app.use('/js/mustache.min.js', express.static(mustacheDir));
+app.use('/js/moment.min.js', express.static(momentDir));
+app.use('/js/qs.js', express.static(qsDir));
 app.use(express.static(publicDir))
 
 
