@@ -10,7 +10,7 @@ const app = express()
 server = http.createServer(app)
 io = socketio(server)
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 80
 
 const bootstrapDistDir = path.join(__dirname + '/../node_modules/bootstrap/dist')
 const publicDir = path.join(__dirname, '/../public')
