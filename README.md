@@ -1,4 +1,4 @@
-# Chat room
+# Chatroom
 
 ## Description
 Application allows you to have a chat in rooms. It is written in NodeJS and uses WebSocket and Bootstrap libraries.
@@ -22,8 +22,8 @@ There are two ways to install this application. You can do it
 #### Installation steps:
 1.1 Clone application by git or download it as ZIP and unpack it
 ```
-git clone https://github.com/Bartosz95/chat-room.git
-cd chat-room && npm install --production
+git clone https://github.com/Bartosz95/chatroom.git
+cd chatroom && npm install --production
 ```
 1.2 Set an environment. You can use what port you want. By default it run on port 80.
 ```
@@ -41,7 +41,7 @@ npm start
 #### 2.1 Installation steps
 Run the docker with a setting port
 ```
-docker run -p 80:80 -d bartosz95/chat-room
+docker run -p 80:80 -d bartosz95/chatroom
 ```
 2. Set an environment. You can use what port you want. By default it run on port 80.
 ```
