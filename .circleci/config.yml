@@ -2,12 +2,12 @@ version: 2.1
 workflows:
   test-deploy:
     jobs:
-      - test
+      - build
     
 jobs:
-  test:
+  build:
     docker:
-      - image: cimg/node:20.0.0
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
       - run: docker build .
