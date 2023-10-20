@@ -13,7 +13,9 @@ const locationTemplate = document.querySelector('#location-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 // Options
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+const { username, room, chatbot } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+const history = []
 
 const autoscroll = () => {
     const $newMessage = $messages.lastElementChild
@@ -45,6 +47,7 @@ socket.on('message', message => {
     })
     $messages.insertAdjacentHTML('beforeend', html)
     autoscroll()
+    history.push({ role: message.username, content: message.text});
 })
 
 socket.on('locationMessage', message => {
@@ -70,9 +73,7 @@ $messageForm.addEventListener('submit', e => {
 
     $messageFormButton.setAttribute('disabled', 'disabled')
     
-    const message = e.target.elements.message.value
-    
-    socket.emit('sendMessage', message, error => {
+    socket.emit('sendMessageHistory', [ ...history, { role: socket.id, content: e.target.elements.message.value}], error => {
         $messageFormButton.removeAttribute('disabled')
         $messageFormTextArea.value = ''
         $messageFormTextArea.focus()
@@ -101,7 +102,7 @@ $sendLocationButton.addEventListener('click', () => {
     })
 })
 
-socket.emit('join', { username, room }, error => {
+socket.emit('join', { username, room, chatbot }, error => {
     if(error) {
         alert(error)
         location.href = '/'

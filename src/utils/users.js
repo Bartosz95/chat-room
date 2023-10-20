@@ -1,20 +1,46 @@
 const users = []
 
-const addUser = ({ id, username, room }) => {
+const addUser = ({ id, username, room, chatbot, isChatbotAvailable }) => {
 
     // Clean data
     username = username.trim().toLowerCase()
     room = room.trim().toLowerCase()
+    chatbot = (chatbot.toLowerCase() === 'true');
 
     // Validate data
-    if(!username || !room) {
+    if(!username) {
         return {
-            error: "Both username and room are required!"
+            error: "Username is required"
+        }
+    }
+
+    if(username === `assistant`) {
+        return {
+            error: "Username cannot be assistant"
+        }
+    }
+    
+    if(chatbot) {
+        if (!isChatbotAvailable) {
+            return {
+                error: "Chatbot is not available now"
+            }
+        }
+        room = `chatbot-${id}`
+    } else {
+        if(!room) {
+            return {
+                error: "Name of room  required"
+            }
+        } else if(room.substring(0,7) === `chatbot` && room.substring(8) !== id) {
+            return {
+                error: `You cannot join to someone chatbot room`
+            }
         }
     }
 
     const existingUser = users.find(user => {
-        return user.username === username && user.room === room
+        return user.username === username && user.room === room && !user.chatbot
     })
 
     if(existingUser) {
@@ -23,7 +49,7 @@ const addUser = ({ id, username, room }) => {
         }
     }
 
-    const user = { id, username, room }
+    const user = { id, username, room, chatbot }
     users.push(user)
     return { user }
 }

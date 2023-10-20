@@ -3,6 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
+const OpenAIApi = require('openai');
 const { generateMessage, generateLocation } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
@@ -26,36 +27,83 @@ app.use('/js/qs.js', express.static(qsDir));
 app.use(express.static(publicDir))
 
 
+
+let openai;
+try {
+ openai = new OpenAIApi({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+} catch (error) {
+    console.log(error.message, `The apiKay variable name is OPENAI_API_KEY`)
+}
+
+
 io.on('connection', socket => {
 
     socket.on('join', (options, callback) => {
-        
-        const { error, user } = addUser({ id: socket.id, ...options })
+
+        const { error, user } = addUser({ id: socket.id, ...options, isChatbotAvailable: !!openai })
 
         if(error) {
             return callback(error)
         }
         
         socket.join(user.room)
-        
-        socket.emit('message', generateMessage(user.username, `Welcome ${user.username} in ${user.room} room!`))
-        socket.broadcast.to(user.room).emit('message', generateMessage(user.username, `${user.username} has joined`))
 
-        io.to(user.room).emit('roomData', {
-            room: user.room,
-            users: getUsersInRoom(user.room)
-        })
-        callback()
+        if (user.chatbot) { 
+            openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                messages: [{ role: "user", content: "Hi"}]  
+            }).then(val => {
+                socket.emit('message', generateMessage(`assistant`, val.choices[0].message.content))
+                socket.broadcast.to(user.room).emit('message', generateMessage(user.username, `${user.username} has joined`))
+                io.to(user.room).emit('roomData', {
+                    room: `Chatbot room`,
+                    users: [ user ]
+                })
+                callback()
+            })
+        } else {
+            socket.emit('message', generateMessage(user.username, `Welcome ${user.username} in ${user.room} room!`))
+            socket.broadcast.to(user.room).emit('message', generateMessage(user.username, `${user.username} has joined`))
+    
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUsersInRoom(user.room)
+            })
+            callback()
+        }
+        
+        
     })
 
-    socket.on('sendMessage', (message, callback) => {
+    socket.on('sendMessageHistory', (history, callback) => {
         const filter = new Filter()
+        const message = history[history.length - 1].content
+        
         if(filter.isProfane(message)){
             return callback('Profanity is not allowed!')
         }
         const user = getUser(socket.id)
+        
         io.to(user.room).emit('message', generateMessage(user.username, message))
-        callback()
+        
+        if(user.chatbot) {
+            openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                messages: history.map(message => { return {
+                    role: message.role !== `assistant` ? `user` : `assistant`,
+                    content: message.content
+                }})
+              }).then(response => {
+                socket.emit('message', generateMessage(`assistant`, response.choices[0].message.content))
+                callback()
+              })  
+            callback()
+        } else {
+            callback()
+        }
+        
     })
 
     socket.on('sendLocation', (coords, callback) => {
