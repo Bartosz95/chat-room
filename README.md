@@ -8,6 +8,7 @@ Application allows you to have a chat in rooms. It is written in NodeJS and uses
 - Moustache
 - Bootstrap
 - Docker
+- OpenAI
 
 ## Installation
 There are two ways to install this application. You can do it 
@@ -25,9 +26,10 @@ There are two ways to install this application. You can do it
 git clone https://github.com/Bartosz95/chatroom.git
 cd chatroom && npm install --production
 ```
-1.2 Set an environment. You can use what port you want. By default it run on port 80.
+1.2 Set an environment. You can use what port you want. By default it run on port 80. To get a Api Kay login to your open your openai account and generate a api key. If you don't set OPENAI_API_KEY environment variable you are still able to use a default chatroom application.
 ```
 export PORT=80
+export OPENAI_API_KEY="sk-..."
 ```
 1.3 Launch
 Run the application.
@@ -61,7 +63,9 @@ If another user joins the room you will get a message about it and you will see 
 ![](doc/chat2.png)
 You can send messages to others in the room. New messages will appear on the bottom of the messages view unless you scroll the window.
 ![](doc/chat3.png)
-You can also send your localisation. After the user clicks on the link, a new tab will open and he sees you localisation.
+You can also send your localization. After the user clicks on the link, a new tab will open and he sees you localization.
+If you setup OPENAI_API_KEY correctly you can talk to chatbot.
+![](doc/chatbot.png)
 
 ## Summary
 Application allowed to get familiar with WebSocket in Node JS.
